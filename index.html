@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Happy Birthday Hammad</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8F0;
+            --soft: #FFC2D1;
+            --dark: #FF8FA3;
+            --maroon: #8B2635;
+            --text: #2b1a1e
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            overflow-x: hidden
+        }
+
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif
+        }
+
+        /* Floating hearts bg */
+        .hearts-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden
+        }
+
+        .heart-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5
+        }
+
+        .blob1 {
+            width: 500px;
+            height: 500px;
+            background: var(--soft);
+            top: -100px;
+            left: -100px;
+            animation: float1 8s ease-in-out infinite
+        }
+
+        .blob2 {
+            width: 400px;
+            height: 400px;
+            background: #FFD6DE;
+            bottom: -50px;
+            right: -80px;
+            animation: float2 10s ease-in-out infinite
+        }
+
+        .blob3 {
+            width: 300px;
+            height: 300px;
+            background: var(--dark);
+            top: 40%;
+            left: 50%;
+            opacity: 0.15;
+            animation: float1 12s ease-in-out infinite
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(30px, 40px) scale(1.1)
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(-20px, 30px) scale(1.05)
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 18px;
+            animation: up 7s linear infinite;
+            opacity: 0
+        }
+
+        @keyframes up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0
+            }
+
+            10% {
+                opacity: 0.6
+            }
+
+            90% {
+                opacity: 0.6
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(30deg);
+                opacity: 0
+            }
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+            padding: 20px 16px
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: pageIn .7s ease
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .container-narrow {
+            max-width: 720px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        /* Buttons - NO BLACK, only theme */
+        .btn-theme {
+            border: none;
+            border-radius: 9999px;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 16px;
+            background: linear-gradient(135deg, var(--soft), var(--dark));
+            color: var(--maroon);
+            box-shadow: 0 8px 20px rgba(255, 143, 163, .4);
+            position: relative;
+            overflow: hidden;
+            transition: all .3s ease;
+            min-height: 52px
+        }
+
+        .btn-theme::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent);
+            transition: left .6s
+        }
+
+        .btn-theme:hover::before {
+            left: 100%
+        }
+
+        .btn-theme:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(255, 143, 163, .55);
+            color: var(--maroon)
+        }
+
+        .btn-theme:active {
+            transform: scale(.98)
+        }
+
+        .btn-theme-secondary {
+            background: transparent;
+            border: 2px solid var(--soft);
+            color: var(--maroon);
+            box-shadow: none
+        }
+
+        .btn-theme-secondary:hover {
+            background: var(--soft);
+            color: var(--maroon)
+        }
+
+        /* Hero */
+        .hero-title {
+            font-size: clamp(36px, 9vw, 72px);
+            font-weight: 800;
+            line-height: .95;
+            color: var(--maroon);
+            text-shadow: 0 2px 0 #fff
+        }
+
+        .hero-title::after {
+            content: ' ♡';
+            color: var(--dark);
+            font-size: .7em
+        }
+
+        .hero-para {
+            font-size: clamp(15px, 4vw, 18px);
+            line-height: 1.6;
+            background: rgba(255, 255, 255, .7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 194, 209, .5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 24px
+        }
+
+        /* Cards */
+        .story-card {
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(139, 38, 53, .1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 194, 209, .4);
+            transition: .4s
+        }
+
+        .story-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 60px rgba(139, 38, 53, .15)
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(135deg, #FFF0F3, #FFC2D1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 2px dashed var(--dark);
+            position: relative
+        }
+
+        .img-placeholder span {
+            font-size: 14px;
+            color: var(--maroon);
+            font-weight: 600;
+            margin-top: 8px
+        }
+
+        .img-placeholder small {
+            color: #9b6b72
+        }
+
+        23 .story-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block
+        }
+
+
+        /* Gifts */
+        .gift-box {
+            width: 100%;
+            height: 190px;
+            border-radius: 24px;
+            background: #fff;
+            border: 2px solid var(--soft);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: .35s;
+            overflow: hidden
+        }
+
+        .gift-box.opened {
+            background: linear-gradient(135deg, #fff, #FFF0F3);
+            border-color: var(--dark);
+            transform: scale(1.02)
+        }
+
+        .gift-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 143, 163, .3)
+        }
+
+        .gift-icon {
+            font-size: 48px;
+            transition: .4s
+        }
+
+        .gift-box.opened .gift-icon {
+            transform: scale(1.2) rotate(8deg)
+        }
+
+        /* Letter */
+        .letter-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid var(--soft);
+            box-shadow: 0 20px 40px rgba(139, 38, 53, .08);
+            line-height: 1.8
+        }
+
+        .cake {
+            font-size: 80px;
+            animation: bounce 2s ease infinite
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        .candle {
+            animation: flicker 1.2s ease infinite
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .6;
+                transform: scale(1.1)
+            }
+        }
+
+        /* Progress dots */
+        .dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 20px 0
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--soft);
+            transition: .3s
+        }
+
+        .dot.active {
+            width: 28px;
+            background: var(--maroon)
+        }
+
+        @media(max-width:576px) {
+
+            .img-placeholder,
+            .story-card img {
+                height: 260px
+            }
+
+            .hero-para {
+                padding: 16px
+            }
+
+            .btn-theme {
+                width: 100%
+            }
+
+            .gift-box {
+                height: 160px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hearts-bg">
+        <div class="heart-blob blob1"></div>
+        <div class="heart-blob blob2"></div>
+        <div class="heart-blob blob3"></div>
+        <!-- floating hearts JS will add -->
+    </div>
+
+    <!-- PAGE 1 HERO -->
+    <div id="page1" class="page active">
+        <div class="container-narrow text-center">
+            <div style="font-size:28px;margin-bottom:12px">💌</div>
+            <h1 class="hero-title">Happy Birthday Hammad</h1>
+            <div class="hero-para">
+                <p class="mb-0">Congratulations! 🎉
+                    You've officially survived 18 years of life.
+
+                    And somehow, among all the people in this world,
+                    I got lucky enough to know you.
+
+                    Honestly… questionable luck on your part.
+                    You got me. 😭</p>
+            </div>
+            <div class="mt-4 d-flex gap-3 justify-content-center flex-column flex-sm-row">
+                <button class="btn-theme" onclick="goPage(2)">Let’s Go Back to Where It All Began</button>
+            </div>
+            <p class="mt-3 text-muted small">Made with ♡ Your Yashfa</p>
+        </div>
+    </div>
+
+    <!-- PAGE 2 CARDS -->
+    <div id="page2" class="page">
+        <div class="container-narrow">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn-theme btn-theme-secondary py-2 px-3" onclick="goPage(1)">Back</button>
+                <div class="dots" id="dots"></div>
+                <button class="btn-theme-secondary border-0 small text-muted" onclick="goPage(3)"
+                    style="background:none">Skip</button>
+            </div>
+
+            <div id="cardContainer">
+                <div class="story-card active-card" data-idx="0">
+
+                    <!-- ✅ YAHAN IMG LAGAO - card ke andar, p-4 se pehle -->
+                    <img src="img/1st-meet.png" alt="Hamari pehli pic"
+                        style="width:100%; height:320px; object-fit:cover; display:block; border-radius:28px 28px 0 0;">
+
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge rounded-pill" style="background:var(--soft);color:var(--maroon)">11 Feb •
+                                Our First Meet</span>
+                            <span>💌</span>
+                        </div>
+                        <h2 class="h5 fw-bold mb-2">Our First Meet</h2>
+                        <p class="mb-0 text-muted small">Mujhe abhi tak hamari woh pehli mulaqat yaad hai. Tum pink
+                            shirt aur ice-blue jeans mein aaye thay cute lag rahe the, aur hamesha ki tarah thore se
+                            shy. Humne saath brownie khaya tha, aur honestly woh chota sa waqt mere liye bohat special
+                            tha. Tum zyada bol nahi rahe thay aur mujhe hi baar baar baat shuru karni pad rahi thi.
+                            Lekin us din ke baad tum mere liye sirf ek jaan-pehchaan wale insan nahi rahe. Woh mulaqat
+                            meri favourite memories mein se ek ban gayi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn-theme btn-theme-secondary flex-fill" id="prevBtn" onclick="prevCard()">
+                Prev</button>
+            <button class="btn-theme flex-fill" id="nextBtn" onclick="nextCard()">Next</button>
+        </div>
+
+    </div>
+
+    </div>
+
+    <!-- PAGE 3 GIFTS -->
+    <div id="page3" class="page">
+        <div class="container-narrow text-center">
+            <h2 class="fw-bold mb-2" style="color:var(--maroon)">A Little Gift for my Ganju betu🎁</h2>
+            <p class="text-muted small mb-4">Every box holds a little surprise, just for you</p>
+
+            <div class="row g-3">
+                <!-- GIFT 1 -->
+                <div class="col-12 col-md-4">
+                    <div class="gift-box" onclick="openGift(this,0)">
+                        <div class="gift-icon">👟</div>
+                        <div class="mt-2 fw-semibold small">For My Favorite Boy</div>
+                        <div class="gift-reveal d-none mt-2"><small class="text-muted">i think this is perfect for you
+                                or mujhe bhi ye bohat passand aya</small></div>
+                    </div>
+                </div>
+                <!-- GIFT 2 -->
+                <div class="col-12 col-md-4">
+                    <div class="gift-box" onclick="openGift(this,1)">
+                        <div class="gift-icon">👕</div>
+                        <div class="mt-2 fw-semibold small">I Picked Just For You </div>
+                        <div class="gift-reveal d-none mt-2"><small class="text-muted">tumhe ye tee pehle nazar me
+                                passand agye </small>
+                        </div>
+                    </div>
+                </div>
+                <!-- GIFT 3 -->
+                <div class="col-12 col-md-4">
+                    <div class="gift-box" onclick="openGift(this,2)">
+                        <div class="gift-icon">👓</div>
+                        <div class="mt-2 fw-semibold small">For My Ganju Betu</div>
+                        <div class="gift-reveal d-none mt-2"><small class="text-muted">tumhe pata hona cahiye ke mujhe
+                                tmhare uppar glasses kitne pasand he</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 d-flex gap-2 justify-content-center">
+                <button class="btn-theme btn-theme-secondary" onclick="goPage(2)">← Memories</button>
+                <button class="btn-theme" onclick="goPage(4)">Last Surprise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4 FINAL -->
+    <div id="page4" class="page">
+        <div class="container-narrow text-center">
+            <div class="cake">🎂<span class="candle">💌</span></div>
+            <h2 class="fw-bold mt-2" style="color:var(--maroon)">One Last Thing</h2>
+
+            <div id="letterClosed" class="mt-4">
+                <button class="btn-theme" onclick="openLetter()">Okay... I Wrote You A Letter💌</button>
+                <p class="small text-muted mt-3">You better read the whole thing.</p>
+            </div>
+
+            <div id="letterOpen" class="d-none mt-4 text-start">
+                <div class="letter-box">
+                    <p>My Dear Hammad,,</p>
+                    <p><b>Happy 18th birthday.❤️</b> <br>I don't think a normal birthday message could ever explain
+                        everything I wanted to say, so I decided to make you something instead.</p>
+                    <p>This little website is made of memories, random moments, stupid jokes, and a lot of feelings that
+                        are sometimes difficult to put into words..</p>
+                    <p>We've had our good days, confusing days, funny days, and days that didn't go exactly how we
+                        wanted them to. But somehow, all of them became part of our story.</p>
+                    <p>And today, I just want you to know that I'm genuinely happy that I got to know you.</p>
+                    <p>And whenever you look back at this little website years from now, I hope it reminds you of one
+                        simple thing:</p>
+                    <p><b>Someone once cared enough to turn a birthday wish into an entire website just for you.</b></p>
+                    <p>Happy birthday, Hammad. ❤️</p>
+                    <p><b>Here's to 18.</b></p>
+                    <p class="text-end fw-bold mb-0"> I hope you smiled at least once <br> Happy 18th, Hammad <br> —Your
+                        Yashfa ♡</p>
+                </div>
+                <div class="mt-4 text-center">
+                    <button class="btn-theme btn-theme-secondary" onclick="goPage(1)">Okay, birthday boy… that's
+                        all</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==========================================
+        // 1. FLOATING HEARTS BACKGROUND
+        // ==========================================
+
+        const bg = document.querySelector('.hearts-bg');
+
+        for (let i = 0; i < 12; i++) {
+            let heart = document.createElement('div');
+
+            heart.className = 'floating-heart';
+            heart.innerHTML = '♡';
+
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 7 + 's';
+            heart.style.fontSize = (12 + Math.random() * 16) + 'px';
+
+            bg.appendChild(heart);
+        }
+
+
+        // ==========================================
+        // 2. OUR STORY DATA
+        // ==========================================
+
+        const stories = [
+
+            {
+                date: "11 Feb 26 • First Meet",
+                title: "Our First Meet",
+                emoji: "💌",
+                image: "img/1st-meet.png",
+                msg: "Mujhe abhi tak hamari woh pehli mulaqat yaad hai. Tum pink shirt aur ice-blue jeans mein aaye thay, aur hamesha ki tarah thore se shy. Humne saath brownie khaya tha, aur honestly woh chota sa waqt mere liye bohat special tha. Tum zyada bol nahi rahe thay aur mujhe hi baar baar baat shuru karni pad rahi thi. Lekin us din ke baad tum mere liye sirf ek jaan-pehchaan wale insan nahi rahe. Woh mulaqat meri favourite memories mein se ek ban gayi."
+            },
+
+            {
+                date: "30 March 26 • Second Meet",
+                title: "Our Second Meet",
+                emoji: "🌸",
+                image: "img/2-meet.png",
+                msg: "The day that felt completely different from our first meet. Is baar tum itne shy nahi thay; jokes, bakwas aur random baaton se poora din yaadgaar bana diya. Humne past, present aur future tak ki baatein ki, jaise waqt ka pata hi nahi chala. Hilltop par kharay hokar bas ek dusre ko dekhte rehna bhi somehow ek beautiful memory ban gaya. Us din bohat kuch unexpected hua, lekin shayad isi liye woh din itna special hai. Some memories don't need a reason to stay — they just do."
+            },
+
+            {
+                date: "18 June 26 • Recent Meet",
+                title: "Museum & Us",
+                emoji: "🎡",
+                image: "img/3rd-meet.webp",
+                msg: "A day I wish I could pause and keep forever. Pehle hum Museum gaye, phir park gaye aur wahan rides bhi li. Tumhara height se darna aur us wali ride ki har ek memory mujhe ab tak yaad hai. Us din humne bohat si choti choti cheezein ki, lekin wahi moments sabse zyada special ban gaye. Tumhare saath woh poora din guzarna honestly meri favourite recent memories mein se ek hai. And yes… you were wearing the tee I gave you. That made me smile a little extra."
+            },
+
+            {
+                date: "Today • Your Day",
+                title: "Happy Birthday!",
+                emoji: "🎂",
+                image: "img/18bday.jpg",
+                msg: "Today is all about celebrating you. I hope 18 brings you countless reasons to smile, grow, and make beautiful memories."
+            }
+
+        ];
+
+
+        // ==========================================
+        // 3. CURRENT STORY CARD
+        // ==========================================
+
+        let curCard = 0;
+
+
+        // ==========================================
+        // 4. CREATE PROGRESS DOTS
+        // ==========================================
+
+        const dotsEl = document.getElementById('dots');
+
+        stories.forEach((story, i) => {
+
+            let dot = document.createElement('div');
+
+            dot.className = 'dot';
+
+            if (i === 0) {
+                dot.classList.add('active');
+            }
+
+            dotsEl.appendChild(dot);
+
+        });
+
+
+        // ==========================================
+        // 5. SHOW STORY CARD
+        // ==========================================
+
+        function renderCard(idx) {
+
+            const story = stories[idx];
+
+            document.getElementById('cardContainer').innerHTML = `
+
+            <div class="story-card">
+
+                <img
+                    src="${story.image}"
+                    alt="${story.title}"
+                    style="width:100%; height:320px; object-fit:cover; display:block; border-radius:28px 28px 0 0;"
+                >
+
+                <div class="p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <span
+                            class="badge rounded-pill"
+                            style="background:var(--soft); color:var(--maroon)"
+                        >
+                            ${story.date}
+                        </span>
+
+                        <span>
+                            ${story.emoji}
+                        </span>
+
+                    </div>
+
+                    <h2 class="h5 fw-bold mb-2">
+                        ${story.title}
+                    </h2>
+
+                    <p class="mb-0 text-muted small">
+                        ${story.msg}
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+            // Update progress dots
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+
+                dot.classList.toggle(
+                    'active',
+                    i === idx
+                );
+
+            });
+
+
+            // Disable Previous button on first card
+
+            document.getElementById('prevBtn').disabled = idx === 0;
+
+
+            // Change Next button text on last card
+
+            if (idx === stories.length - 1) {
+
+                document.getElementById('nextBtn').innerText =
+                    "See the Gifts";
+
+            } else {
+
+                document.getElementById('nextBtn').innerText =
+                    "Next";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // 6. NEXT STORY
+        // ==========================================
+
+        function nextCard() {
+
+            if (curCard < stories.length - 1) {
+
+                curCard++;
+
+                renderCard(curCard);
+
+            } else {
+
+                goPage(3);
+
+            }
+
+        }
+
+
+        // ==========================================
+        // 7. PREVIOUS STORY
+        // ==========================================
+
+        function prevCard() {
+
+            if (curCard > 0) {
+
+                curCard--;
+
+                renderCard(curCard);
+
+            }
+
+        }
+
+
+        // ==========================================
+        // 8. CHANGE PAGE
+        // ==========================================
+
+        function goPage(n) {
+
+            document
+                .querySelectorAll('.page')
+                .forEach(page => {
+
+                    page.classList.remove('active');
+
+                });
+
+
+            document
+                .getElementById('page' + n)
+                .classList.add('active');
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+        }
+
+
+        // ==========================================
+        // 9. OPEN GIFT
+        // ==========================================
+
+        function openGift(el) {
+
+            el.classList.add('opened');
+
+
+            const reveal = el.querySelector('.gift-reveal');
+
+            if (reveal) {
+
+                reveal.classList.remove('d-none');
+
+            }
+
+
+            // Simple celebration effect
+
+            let celebration = document.createElement('div');
+
+            celebration.innerHTML = '🎉';
+
+            celebration.style.position = 'fixed';
+            celebration.style.left = '50%';
+            celebration.style.top = '40%';
+            celebration.style.fontSize = '40px';
+            celebration.style.zIndex = '9999';
+            celebration.style.animation = 'bounce 1s';
+
+
+            document.body.appendChild(celebration);
+
+
+            setTimeout(() => {
+
+                celebration.remove();
+
+            }, 1000);
+
+        }
+
+
+        // ==========================================
+        // 10. OPEN LETTER
+        // ==========================================
+
+        function openLetter() {
+
+            document
+                .getElementById('letterClosed')
+                .classList.add('d-none');
+
+
+            document
+                .getElementById('letterOpen')
+                .classList.remove('d-none');
+
+        }
+
+
+        // ==========================================
+        // 11. START WITH FIRST CARD
+        // ==========================================
+
+        renderCard(0);
+
+    </script>
+</body>
+
+</html>
